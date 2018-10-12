@@ -28,7 +28,7 @@ def start_server():
         # keyboard listener -- used by host
         def on_press(key):
             try:
-                connection.send('down-{0}'.format(key.char).encode())
+                connection.send('press-{0}'.format(key.char).encode())
             except AttributeError:
                 keyStr = special_key_switcher.switch_key(key)
                 connection.send('down-{0}'.format(keyStr).encode())
