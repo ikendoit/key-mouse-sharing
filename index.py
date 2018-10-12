@@ -12,8 +12,7 @@ import sys
 from pynput import keyboard, mouse
 from lib import special_key_switcher
 from lib import special_mouse_switcher
-HOST = 'localhost'
-#HOST = '0.0.0.0'
+HOST = '0.0.0.0'
 PORT = 31998
 
 def start_server():
