@@ -31,7 +31,7 @@ def start_server():
                 connection.send('press-{0}'.format(key.char).encode())
             except AttributeError:
                 keyStr = special_key_switcher.switch_key(key)
-                connection.send('down-{0}'.format(keyStr).encode())
+                connection.send(keyStr.encode())
                 print('special key {0} pressed'.format(key))
 
         def on_release(key):
