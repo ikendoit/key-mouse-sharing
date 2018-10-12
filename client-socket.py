@@ -13,23 +13,27 @@ import pyautogui
 
 def perform_according(cmd):
     # keyboard performer -- used by client
-    cmd.split('-')
-    pyautogui.keyDown('alt')
-    pyautogui.press('tab')
-    pyautogui.keyUp('alt')
-    
-    pyautogui.press('9')
-    pyautogui.press('j')
-    pyautogui.press('j')
-    pyautogui.press('j')
-    pyautogui.press('j')
-    pyautogui.press('f')
+    action, key = cmd.split('-')
+    if action == 'down':    
+        pyautogui.keyDown(key)
+    elif action == 'up':    
+        pyautogui.keyUp(key)
+    elif action == 'move': 
+        x,y = key.split(',')
+        # should use moveRel(dx,dy)
+        pyautogui.moveTo(x,y)
+    elif action == 'click':
+        x,y,button,mouse_action = key.split(',')
+        # should use moveRel
+        # should consider dragging
+        # should consifer holding/releasing (for mouse_action)
+        pyautogui.moveTo(x,y)
+        pyautogui.click(button)
 
 
-
-def chatConnection(): 
+def chatConnection(host): 
     print('waiting for host...\n')
-    HOST = 'localhost'
+    HOST = host or 'localhost'
     PORT = 31998
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1)
@@ -41,4 +45,4 @@ def chatConnection():
         print('\n[HOST]> {0}'.format(reply))
     s.close()
 
-chatConnection()
+chatConnection(sys.argv[0])
