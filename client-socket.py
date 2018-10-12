@@ -11,7 +11,14 @@ import socket
 import sys
 import pyautogui
 
-pyautogui.PAUSE = 0
+# Improve performance, pyautogui has a 'fail-safe', where you get 0.1s to move the mouse to 0,0 to exit. https://stackoverflow.com/questions/46736652/pyautogui-press-causing-lag-when-called
+# Let's remove that for now. May find other ways in the future
+pyautogui.PAUSE=0
+# same thing for: https://github.com/asweigart/pyautogui/issues/67, which seems to end up with a Java praise ?!
+pyautogui.MINIMUM_DURATION=0
+pyautogui.MINIMUM_SLEEP=0
+
+# TODO: test shift-... or alt-tab 
 
 def perform_according(cmd):
     try :
@@ -24,10 +31,8 @@ def perform_according(cmd):
         if action == 'press':    
             pyautogui.press(key)
         if action == 'down':    
-            print('down ',key)
             pyautogui.keyDown(key)
         elif action == 'up':    
-            print('up ',key)
             pyautogui.keyUp(key)
         elif action == 'move': 
             x,y = key.split(',')[0:2]
@@ -56,7 +61,7 @@ def chatConnection(host):
     while True: 
         reply = s.recv(4096).decode()
         perform_according(reply)
-        print('\n[HOST]> {0}'.format(reply))
+        print('\n>>> {0}'.format(reply))
     s.close()
 
 chatConnection(sys.argv[1] if len(sys.argv) > 1 else 'localhost')
