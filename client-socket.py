@@ -11,6 +11,8 @@ import socket
 import sys
 import pyautogui
 
+pyautogui.PAUSE = 0
+
 def perform_according(cmd):
     try :
         # keyboard performer -- used by client
