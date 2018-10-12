@@ -10,8 +10,8 @@ The server that will
 import socket
 import sys
 from pynput import keyboard, mouse
-from lib import special_key_switcher
-from lib import special_mouse_switcher
+from lib import key_switcher
+from lib import mouse_switcher
 HOST = '0.0.0.0'
 PORT = 31998
 
@@ -29,12 +29,14 @@ def start_server():
             try:
                 connection.send('press-{0}'.format(key.char).encode())
             except AttributeError:
-                keyStr = special_key_switcher.switch_key(key)
+                keyStr = key_switcher.switch_key(key)
                 connection.send(keyStr.encode())
                 print('special key {0} pressed'.format(key))
 
         def on_release(key):
-            connection.send('up-{0}'.format(str(key)).encode())
+            if key_switcher.key_need_up(str(key)) == 'down':
+                # keys that only 'press' does not need to do .keyUp()
+                connection.send('up-{0}'.format(str(key)).encode())
             if key == keyboard.Key.f1:    
                 return False
 
