@@ -26,7 +26,7 @@ def perform_according(cmd):
         splitted_cmd = cmd.split('-')
         if len(splitted_cmd) < 2:
             print('bad reply, connection ended. {0}'.format(cmd))
-            return
+            sys.exit(1)
         action, key = splitted_cmd[0:2]
         if action == 'press':    
             pyautogui.press(key)

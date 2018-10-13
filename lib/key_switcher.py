@@ -1,7 +1,9 @@
 # pynput of the host does not auto accept special keys as string 
 # this module convert the Object into the right String to send to server
 # Author: Ken Nguyen
-from keys_map import keys_map, keys_command
+from . import keys_map 
+keys_map_dict = keys_map.keys_map
+keys_command = keys_map.keys_command
 
 def switch_key(key_code):
     return keys_map.get(key_code, None)
