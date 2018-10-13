@@ -12,7 +12,8 @@ import sys
 from pynput import keyboard, mouse
 from lib import key_switcher
 from lib import mouse_switcher
-HOST = '0.0.0.0'
+#HOST = '0.0.0.0'
+HOST='localhost'
 PORT = 31998
 
 def start_server():
@@ -22,6 +23,7 @@ def start_server():
     s.bind((HOST, PORT))
     s.listen(5)
     connection, addr = s.accept()
+    print('initiated with client')
 
     while True: 
         # keyboard listener -- used by host

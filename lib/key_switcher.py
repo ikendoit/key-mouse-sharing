@@ -6,11 +6,12 @@ keys_map_dict = keys_map.keys_map
 keys_command = keys_map.keys_command
 
 def switch_key(key_code):
-    return keys_map.get(key_code, None)
+    return keys_map_dict.get(key_code, None)
 
 def key_need_up(key_string): 
     for item in keys_command:
         action, keyStr = item.split('-')[0:2]
         if keyStr == key_string:    
             return action
-        print('###################### WHAT IS THIS SOCERY? ???? (key action not found for): ',key_string)
+
+    return 'down'

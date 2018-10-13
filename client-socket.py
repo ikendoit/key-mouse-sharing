@@ -31,6 +31,16 @@ def perform_according(cmd):
         if action == 'press':    
             pyautogui.press(key)
         if action == 'down':    
+            if key == 'shift':
+                pyautogui.keyDown('ctrl')
+                pyautogui.press('b')
+                pyautogui.keyUp('ctrl')
+                pyautogui.press('1')
+            if key == 'alt':
+                pyautogui.keyDown('ctrl')
+                pyautogui.press('b')
+                pyautogui.keyUp('ctrl')
+                pyautogui.press('2')
             pyautogui.keyDown(key)
         elif action == 'up':    
             pyautogui.keyUp(key)
@@ -53,7 +63,6 @@ def chatConnection(host):
     print('waiting for host...\n')
     HOST = host
     PORT = 31998
-    print(HOST)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1)
     s.connect((HOST, PORT))
