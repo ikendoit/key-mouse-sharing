@@ -14,4 +14,4 @@ def key_need_up(key_string):
         if keyStr == key_string:    
             return action
 
-    return 'down'
+    return 'press'

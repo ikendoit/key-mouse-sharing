@@ -17,10 +17,12 @@ pyautogui.PAUSE=0
 # same thing for: https://github.com/asweigart/pyautogui/issues/67, which seems to end up with a Java praise ?!
 pyautogui.MINIMUM_DURATION=0
 pyautogui.MINIMUM_SLEEP=0
+holding_key = None
 
 # TODO: test shift-... or alt-tab 
 
 def perform_according(cmd):
+    global holding_key
     try :
         # keyboard performer -- used by client
         splitted_cmd = cmd.split('-')
@@ -29,11 +31,19 @@ def perform_according(cmd):
             sys.exit(1)
         action, key = splitted_cmd[0:2]
         if action == 'press':    
-            pyautogui.press(key)
+            if holding_key:
+                print('PERFORMING HOLDING KEY: ',holding_key)
+                pyautogui.keyDown(holding_key)
+                pyautogui.press(key)
+                pyautogui.keyUp(holding_key)
+            else :
+                pyautogui.press(key)
         if action == 'down':    
             pyautogui.keyDown(key)
+            holding_key=key
         elif action == 'up':    
             pyautogui.keyUp(key)
+            holding_key=None
         elif action == 'move': 
             x,y = key.split(',')[0:2]
             # should use moveRel(dx,dy)
@@ -56,10 +66,16 @@ def chatConnection(host):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1)
     s.connect((HOST, PORT))
+    loading=False
 
     while True: 
         reply = s.recv(4096).decode()
+        if loading: continue
+        loading=True
+        sys.stdout.write(">>> Loading.")
         perform_according(reply)
+        sys.stdout.write("<<< Done.\n")
+        loading=False
         print('\n>>> {0}'.format(reply))
     s.close()
 
