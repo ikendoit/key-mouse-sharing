@@ -35,7 +35,6 @@ def perform_according(cmd):
                 print('PERFORMING HOLDING KEY: ',holding_key)
                 pyautogui.keyDown(holding_key)
                 pyautogui.press(key)
-                pyautogui.keyUp(holding_key)
             else :
                 pyautogui.press(key)
         if action == 'down':    
