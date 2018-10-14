@@ -32,7 +32,7 @@ def start_server():
             except AttributeError:
                 keyStr = key_switcher.switch_key(key)
                 connection.send(keyStr.encode())
-                print('special key {0} pressed'.format(key))
+                print('special key {0} used'.format(key))
 
         def on_release(key):
             if key_switcher.key_need_up(str(key)) == 'down':
@@ -49,7 +49,7 @@ def start_server():
                 .format(
                     str(x), 
                     str(y), 
-                    special_mouse_switcher.switch_button(button),
+                    mouse_switcher.switch_button(button),
                     'Pressed' if pressed else 'Released'
                 ).encode())
         def on_scroll(x, y, dx, dy):
