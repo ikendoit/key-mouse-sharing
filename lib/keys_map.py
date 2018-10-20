@@ -10,7 +10,7 @@ keys_map={
     Key.alt_r: 'down-alt',
     Key.alt_gr: 'down-alt',
     Key.backspace: 'press-backspace',
-    Key.caps_lock: 'down-caps',
+    Key.caps_lock: 'down-capslock',
     Key.cmd: 'down-cmd',
     Key.cmd_l: 'down-cmd',
     Key.cmd_r: 'down-cmd',
@@ -57,8 +57,8 @@ keys_map={
     Key.menu: 'press-menu',
     Key.num_lock: 'press-num',
     Key.pause: 'press-pause',
-    Key.print_screen: 'press-print',
-    Key.scroll_lock: 'press-scroll'
+    Key.print_screen: 'press-printscreen',
+    Key.scroll_lock: 'press-scrolllock'
 }
 
 keys_command=(

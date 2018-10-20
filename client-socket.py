@@ -41,8 +41,8 @@ def perform_according(cmd):
             pyautogui.keyDown(key)
             holding_key=key
         elif action == 'up':    
-            pyautogui.keyUp(key)
             holding_key=None
+            pyautogui.keyUp(key)
         elif action == 'move': 
             x,y = key.split(',')[0:2]
             # should use moveRel(dx,dy)
@@ -56,6 +56,9 @@ def perform_according(cmd):
             pyautogui.click(button)
     except Exception as err:
         print(err)
+
+def parseLastRequest(req) :
+    print(req)
 
 
 def chatConnection(host): 

@@ -10,6 +10,7 @@ The server that will
 import socket
 import sys
 from pynput import keyboard, mouse
+import pyautogui
 from lib import key_switcher
 from lib import mouse_switcher
 HOST = '0.0.0.0'
@@ -32,7 +33,8 @@ def start_server():
             except AttributeError:
                 keyStr = key_switcher.switch_key(key)
                 connection.send(keyStr.encode())
-                print('special key {0} used'.format(key))
+                pyautogui.keyUp(keyStr)
+                print('special key {0} pressed'.format(key))
 
         def on_release(key):
             if key_switcher.key_need_up(str(key)) == 'down':
