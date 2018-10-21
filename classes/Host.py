@@ -1,6 +1,7 @@
 from pynput import keyboard, mouse
 from lib import key_switcher
 from lib import mouse_switcher
+#mouseController = mouse.Controller()
 
 class HostScript:
     def __init__(self, connection):
@@ -65,19 +66,41 @@ class HostScript:
                 print('start joining')
                 kb_listener.join()
                 print('ended joining')
-        print('finished listening')
+
+
 
     # host machine, you can move mouse using key board
     # but using vim syntax
     def keyboard_does_mouse(self):
         def on_press_kdm(key):
-            a='placeholder' 
+            try : 
+                action = {
+                    'h': [-10,0],
+                    'j': [0,10],
+                    'k': [0,-10],
+                    'l': [10,0],
+                    'H': [-30,0],
+                    'J': [0,30],
+                    'K': [0,-30],
+                    'L': [30,0],
+                    'i': 'left',
+                    'o': 'right'
+                }.get(key.char)
+                if not action: return
+                if type(action) is str:
+                    pyautogui.click(button=action)
+                elif type(action) is list:
+                    pos = pyautogui.position()
+                    newPos = []
+                    newPos.append(pos[0]+action[0])
+                    newPos.append(pos[1]+action[1])
+                    pyautogui.moveTo(newPos) 
+            except AttributeError:
+                print('special key')
 
         def on_release_kdm(key):
-            print('released key does mouse',key)
             if key == keyboard.Key.f1:    
                 return False
-
 
         with keyboard.Listener(
             on_press=on_press_kdm,
@@ -86,11 +109,9 @@ class HostScript:
                 kb_listener_child.join()
 
 
+
     def runController(self): 
         def on_release(key):
-            if key == keyboard.Key.f1:    
-                print('exiting controller')
-                return False
             if key == keyboard.Key.f2:    
                 print('running child connection')
                 self.runChild()

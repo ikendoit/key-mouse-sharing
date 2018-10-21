@@ -24,3 +24,15 @@ or follow this page: https://pyautogui.readthedocs.io/en/latest/install.html
 
   <start typing on host machine>
 ```
+
+# MOUSE CONTROLLER
+
+##RUN
+
+```
+	./mouse_controller.py
+	<click f3 to control mouse, f1 to exit mouse mode but can return>
+	< 'hjkl' to move around >
+	< 'io' to left/right click >
+
+```
