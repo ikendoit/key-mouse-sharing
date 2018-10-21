@@ -15,17 +15,19 @@ class HostScript:
                 # socket seems to throttle packets, 
                 # when on_mouse_move works, it generates too many packets and too fast 
                 # socket throttles a bit (~0.1s?) and then sends 3-4 packets to the client. So we use <<..>> to identify separate packets.
+                print('sending to client: ',key)
                 self.connection.send('<<press-{0}>>'.format(key.char).encode())
             except AttributeError:
                 keyStr = key_switcher.switch_key(key)
                 self.connection.send(keyStr.encode())
-                print('special key {0} pressed'.format(key))
 
         def on_release(key):
-            if key_switcher.key_need_up(str(key)) == 'down':
+            #if key_switcher.key_need_up(str(key)) == 'down':
                 # keys that only 'press' does not need to do .keyUp()
-                connection.send('<<up-{0}>>'.format(str(key)).encode())
+            print('release in client: ', key)
+            self.connection.send('<<up-{0}>>'.format(str(key)).encode())
             if key == keyboard.Key.f1:    
+                print('exditing client')
                 return False
 
         def on_move(x,y):
@@ -50,15 +52,20 @@ class HostScript:
 
         with keyboard.Listener(
                 on_press=on_press,
-                on_release=on_release) as kb_listener: 
+                on_release=on_release,
+                suppress=True) as kb_listener: 
 
             with mouse.Listener(
                     on_move=on_move,
                     on_click=on_click,
-                    on_scroll=on_scroll) as m_listener: 
+                    on_scroll=on_scroll,
+                    suppress=True) as m_listener: 
 
                 m_listener.join()
+                print('start joining')
                 kb_listener.join()
+                print('ended joining')
+        print('finished listening')
 
     # host machine, you can move mouse using key board
     # but using vim syntax
@@ -81,15 +88,23 @@ class HostScript:
 
     def runController(self): 
         def on_release(key):
-            print('released parent',key)
+            if key == keyboard.Key.f1:    
+                print('exiting controller')
+                return False
             if key == keyboard.Key.f2:    
+                print('running child connection')
                 self.runChild()
+                print('finish running child')
             if key == keyboard.Key.f3:    
+                print('running key-mouse connection')
                 self.keyboard_does_mouse()
 
         with keyboard.Listener(
-            on_release=on_release,
-            suppress=False) as kb_listener_controller: 
+            on_release=on_release
+            ) as kb_listener_controller: 
+                print('start joining controller')
                 kb_listener_controller.join()
+                print('end joining controller')
+        print('finish with, controller')
 
 

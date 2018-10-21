@@ -26,6 +26,7 @@ def start_server():
 
     while True: 
         client1.runController()
+    print('closing all connection')
     connection.close()
 
 start_server()

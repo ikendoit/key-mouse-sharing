@@ -10,6 +10,7 @@ Simple client that receives
 import socket 
 import sys
 import pyautogui
+from pynput.mouse import Controller, Button
 
 # Improve performance, pyautogui has a 'fail-safe', where you get 0.1s to move the mouse to 0,0 to exit. https://stackoverflow.com/questions/46736652/pyautogui-press-causing-lag-when-called
 # Let's remove that for now. May find other ways in the future
@@ -18,6 +19,7 @@ pyautogui.PAUSE=0
 pyautogui.MINIMUM_DURATION=0
 pyautogui.MINIMUM_SLEEP=0
 holding_key = None
+mouse = Controller()
 
 # TODO: test shift-... or alt-tab 
 
@@ -48,17 +50,15 @@ def perform_according(cmd):
         elif action == 'move': 
             print('move: ',key.split(','))
             x,y = key.split(',')[0:2]
-            # should use moveRel(dx,dy)
-            pyautogui.moveTo(x,y)
+            mouse.move(dx, dy)
         elif action == 'click':
             print(key.split(','))
             x,y,button,mouse_action = key.split(',')
-
-            # should use moveRel
+                
             # should consider dragging
             # should consifer holding/releasing (for mouse_action)
-            pyautogui.moveTo(x,y)
-            pyautogui.click(button)
+
+            print(x,y,button, mouse_action)
     except Exception as err:
         print(err)
 
