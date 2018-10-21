@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# host machine scripts to send host's keys and mouse to client
+# Author: Ken Nguyen
 
 '''
 The server that will
@@ -9,13 +11,9 @@ The server that will
 
 import socket
 import sys
-from pynput import keyboard, mouse
-import pyautogui
-from lib import key_switcher
-from lib import mouse_switcher
+from classes import Host
 HOST = '0.0.0.0'
 PORT = 31998
-
 def start_server():
     # socket connection for inter-computer connection
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -24,57 +22,10 @@ def start_server():
     s.listen(5)
     connection, addr = s.accept()
     print('initiated with client')
+    client1 = Host.HostScript(connection)
 
     while True: 
-        # keyboard listener -- used by host
-        def on_press(key):
-            try:
-                connection.send('press-{0}'.format(key.char).encode())
-            except AttributeError:
-                keyStr = key_switcher.switch_key(key)
-                connection.send(keyStr.encode())
-                pyautogui.keyUp(keyStr)
-                print('special key {0} pressed'.format(key))
-
-        def on_release(key):
-            if key_switcher.key_need_up(str(key)) == 'down':
-                # keys that only 'press' does not need to do .keyUp()
-                connection.send('up-{0}'.format(str(key)).encode())
-            if key == keyboard.Key.f1:    
-                return False
-
-        def on_move(x,y):
-            connection.send('move-{0},{1}'.format(str(x), str(y)).encode())
-
-        def on_click(x,y,button, pressed):  
-            connection.send('click-{0},{1},{2},{3}'
-                .format(
-                    str(x), 
-                    str(y), 
-                    mouse_switcher.switch_button(button),
-                    'Pressed' if pressed else 'Released'
-                ).encode())
-        def on_scroll(x, y, dx, dy):
-            connection.send('scroll-{0},{1},{2},{3}'
-                .format(
-                    str(x), 
-                    str(y),
-                    str(dx),
-                    str(dy),
-                ).encode())
-
-        with keyboard.Listener(
-                on_press=on_press,
-                on_release=on_release) as kb_listener: 
-
-            with mouse.Listener(
-                    on_move=on_move,
-                    on_click=on_click,
-                    on_scroll=on_scroll) as m_listener: 
-
-                m_listener.join()
-                kb_listener.join()
-
+        client1.runController()
     connection.close()
 
 start_server()

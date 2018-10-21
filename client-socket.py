@@ -30,6 +30,8 @@ def perform_according(cmd):
             print('bad reply, connection ended. {0}'.format(cmd))
             sys.exit(1)
         action, key = splitted_cmd[0:2]
+        action = action[2:]
+        key = key[:-2]
         if action == 'press':    
             if holding_key:
                 print('PERFORMING HOLDING KEY: ',holding_key)
@@ -44,11 +46,14 @@ def perform_according(cmd):
             holding_key=None
             pyautogui.keyUp(key)
         elif action == 'move': 
+            print('move: ',key.split(','))
             x,y = key.split(',')[0:2]
             # should use moveRel(dx,dy)
             pyautogui.moveTo(x,y)
         elif action == 'click':
+            print(key.split(','))
             x,y,button,mouse_action = key.split(',')
+
             # should use moveRel
             # should consider dragging
             # should consifer holding/releasing (for mouse_action)
