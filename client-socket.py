@@ -8,6 +8,7 @@ Simple client that receives
 '''
 
 import socket 
+import re
 import sys
 import pyautogui
 from pynput.mouse import Controller, Button
@@ -27,13 +28,16 @@ def perform_according(cmd):
     global holding_key
     try :
         # keyboard performer -- used by client
-        splitted_cmd = cmd.split('-')
-        if len(splitted_cmd) < 2:
-            print('bad reply, connection ended. {0}'.format(cmd))
-            sys.exit(1)
-        action, key = splitted_cmd[0:2]
-        action = action[2:]
-        key = key[:-2]
+        #splitted_cmd = cmd.split('-')
+        #if len(splitted_cmd) < 2: #    print('bad reply, connection ended. {0}'.format(cmd))
+        #    sys.exit(1)
+        #action, key = splitted_cmd[0:2]
+        #action = action[2:]
+        #key = key[:-2]
+        #print(action, key)
+        action_key = re.match(r'<<(.*)>>',cmd)[1].split('>><<')[0]
+        action, key = action_key.split('-')
+        print(action, key)
         if action == 'press':    
             if holding_key:
                 print('PERFORMING HOLDING KEY: ',holding_key)
@@ -42,6 +46,7 @@ def perform_according(cmd):
             else :
                 pyautogui.press(key)
         if action == 'down':    
+            print('HOLDING KEY IS:', holding_key)
             pyautogui.keyDown(key)
             holding_key=key
         elif action == 'up':    
@@ -50,6 +55,7 @@ def perform_according(cmd):
         elif action == 'move': 
             print('move: ',key.split(','))
             x,y = key.split(',')[0:2]
+            # TODO: use pyautogui to avoid crashing
             mouse.move(dx, dy)
         elif action == 'click':
             print(key.split(','))
@@ -79,11 +85,8 @@ def chatConnection(host):
         reply = s.recv(4096).decode()
         if loading: continue
         loading=True
-        sys.stdout.write(">>> Loading.")
         perform_according(reply)
-        sys.stdout.write("<<< Done.\n")
         loading=False
-        print('\n>>> {0}'.format(reply))
     s.close()
 
 chatConnection(sys.argv[1] if len(sys.argv) > 1 else 'localhost')
