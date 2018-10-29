@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Client script to receive key strokes and mouse actions from host and execute on client machine
+# Author: Ken Nguyen
 
 '''
 Simple client that receives
@@ -20,12 +22,14 @@ pyautogui.PAUSE=0
 pyautogui.MINIMUM_DURATION=0
 pyautogui.MINIMUM_SLEEP=0
 holding_key = None
+numberBuffer = 0 
 mouse = Controller()
 
 # TODO: test shift-... or alt-tab 
 
 def perform_according(cmd):
     global holding_key
+    global numberBuffer
     try :
         # keyboard performer -- used by client
         #splitted_cmd = cmd.split('-')
@@ -35,14 +39,19 @@ def perform_according(cmd):
         #action = action[2:]
         #key = key[:-2]
         #print(action, key)
-        action_key = re.match(r'<<(.*)>>',cmd)[1].split('>><<')[0]
-        action, key = action_key.split('-')
+        action_key = None
+        try :
+            action_key = re.match(r'<<(.*)>>',cmd)[1].split('>><<')[0]
+            action, key = action_key.split('-')
+        except: 
+            pass
         print(action, key)
         if action == 'press':    
             if holding_key:
                 print('PERFORMING HOLDING KEY: ',holding_key)
                 pyautogui.keyDown(holding_key)
                 pyautogui.press(key)
+                pyautogui.keyUp(holding_key)
             else :
                 pyautogui.press(key)
         if action == 'down':    
@@ -50,21 +59,33 @@ def perform_according(cmd):
             pyautogui.keyDown(key)
             holding_key=key
         elif action == 'up':    
-            holding_key=None
+            pyautogui.keyUp(holding_key)
             pyautogui.keyUp(key)
+            holding_key=None
         elif action == 'move': 
-            print('move: ',key.split(','))
-            x,y = key.split(',')[0:2]
-            # TODO: use pyautogui to avoid crashing
-            mouse.move(dx, dy)
-        elif action == 'click':
-            print(key.split(','))
-            x,y,button,mouse_action = key.split(',')
-                
-            # should consider dragging
-            # should consifer holding/releasing (for mouse_action)
-
-            print(x,y,button, mouse_action)
+            action = {
+                'left': [-10,0],
+                'down': [0,10],
+                'up': [0,-10],
+                'right': [10,0],
+            }.get(key)
+            if type(action) == 'list': 
+                try :
+                    num=int(key.char)
+                    numberBuffer= numberBuffer*10
+                    numberBuffer= numberBuffer+num
+                except Exception as err:
+                    pass
+            elif action == 'l-click':
+                try :
+                    pyautogui.click()
+                except Exception as err:
+                    pass
+            elif action == 'r-click':
+                try :
+                    pyautogui.click(button='right')
+                except Exception as err:
+                    pass
     except Exception as err:
         print(err)
 

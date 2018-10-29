@@ -1,6 +1,14 @@
 # Key Mouse Sharing 
 
-This read me is written in another keyboard
+This read me is written in another keyboard ( using Thinkpad's key board, remotely control Asus keyboard to type this read me )
+
+## Author's Note: 
+
+	There seem to be a bug, where python3-xlib threading is conflicting with linux Xorg display server. 
+	
+	I will continue to research on this bug. while so, this project will be delayed. 
+	
+	This bug exists in this question, which no one has answered yet. https://stackoverflow.com/questions/52935700/how-do-i-properly-terminate-pynput-calls-now-it-makes-my-x-crash-self-socket
 
 ## Installation (Linux)
 ```
