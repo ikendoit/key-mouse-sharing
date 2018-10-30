@@ -88,6 +88,7 @@ def perform_according(cmd):
                     pass
     except Exception as err:
         print(err)
+        return False
 
 def parseLastRequest(req) :
     print(req)

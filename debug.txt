@@ -1,0 +1,62 @@
+Exception in thread Thread-10:
+Traceback (most recent call last):
+ File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 584, in send_and_recv
+ i = self.socket.send(self.data_send)
+ BrokenPipeError: [Errno 32] Broken pipe
+
+ During handling of the above exception, another exception occurred:
+
+ Traceback (most recent call last):
+ File "/usr/local/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+ self.run()
+ File "/usr/local/lib/python3.6/site-packages/pynput/_util/__init__.py", line 136, in run
+ self._run()
+ File "/usr/local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 401, in _run
+ self._suppress_stop(dm)
+ File "/usr/local/lib/python3.6/contextlib.py", line 89, in __exit__
+ next(self.gen)
+ File "/usr/local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 74, in display_manager
+  display.sync()
+  File "/usr/local/lib/python3.6/site-packages/Xlib/display.py", line 182, in sync
+  self.get_pointer_control()
+  File "/usr/local/lib/python3.6/site-packages/Xlib/display.py", line 833, in get_pointer_control
+  return request.GetPointerControl(display = self.display)
+  File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1369, in __init__
+  self.reply()
+  File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1381, in reply
+  self._display.send_and_recv(request = self._serial)
+  File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 586, in send_and_recv
+   self.close_internal('server: %s' % err[1])
+   TypeError: 'BrokenPipeError' object is not subscriptable
+   Exception in thread Thread-5:
+   Traceback (most recent call last):
+   File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 584, in send_and_recv
+   i = self.socket.send(self.data_send)
+   BrokenPipeError: [Errno 32] Broken pipe
+
+   During handling of the above exception, another exception occurred:
+
+   Traceback (most recent call last):
+   File "/usr/local/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+   self.run()
+   File "/usr/local/lib/python3.6/site-packages/pynput/_util/__init__.py", line 136, in run
+   self._run()
+   File "/usr/local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 401, in _run
+   self._suppress_stop(dm)
+   File "/usr/local/lib/python3.6/contextlib.py", line 89, in __exit__
+   next(self.gen)
+    File "/usr/local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 74, in display_manager
+    display.sync()
+    File "/usr/local/lib/python3.6/site-packages/Xlib/display.py", line 182, in sync
+    self.get_pointer_control()
+    File "/usr/local/lib/python3.6/site-packages/Xlib/display.py", line 833, in get_pointer_control
+    return request.GetPointerControl(display = self.display)
+    File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1369, in __init__
+    self.reply()
+    File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1381, in reply
+    self._display.send_and_recv(request = self._serial)
+    File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 586, in send_and_recv
+     self.close_internal('server: %s' % err[1])
+     TypeError: 'BrokenPipeError' object is not subscriptable
+
+

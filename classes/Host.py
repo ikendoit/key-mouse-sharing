@@ -85,5 +85,3 @@ class HostScript:
                 kb_listener_controller.join()
                 print('end joining controller')
         print('finish with, controller')
-
-
