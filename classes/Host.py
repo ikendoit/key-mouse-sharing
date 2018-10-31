@@ -27,7 +27,7 @@ class HostScript:
                 # keys that only 'press' does not need to do .keyUp()
             print('release in client: ', key)
             self.connection.send('<<up-{0}>>'.format(str(key)).encode())
-            if key == keyboard.Key.f1:    
+            if key == keyboard.Key.esc:    
                 print('exditing client')
                 return False
 

@@ -31,8 +31,8 @@ def start_server():
     while True: 
         connection, addr = s.accept()
         print('initiated with client')
-        threading.Thread()
-        threading.Thread(target = accept_client,args = (connection,addr)).start()
+        #threading.Thread(target = accept_client,args = (connection,addr)).start()
+        accept_client(connection,addr)
     print('closing all connection')
     connection.close()
 
