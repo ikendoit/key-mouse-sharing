@@ -52,6 +52,13 @@ def perform_according(cmd):
                 pyautogui.keyDown(holding_key)
                 pyautogui.press(key)
                 pyautogui.keyUp(holding_key)
+                try :
+                    num=int(key.char)
+                    numberBuffer= numberBuffer*10
+                    numberBuffer= numberBuffer+num
+                except Exception as err:
+                    numberBuffer = 0
+                    pass
             else :
                 pyautogui.press(key)
         if action == 'down':    
