@@ -40,13 +40,15 @@ def perform_according(cmd):
         #key = key[:-2]
         #print(action, key)
         action_key = None
+        action = None,
+        key = None
         try :
             action_key = re.match(r'<<(.*)>>',cmd)[1].split('>><<')[0]
             action, key = action_key.split('-')
-        except: 
+        except:
             pass
         print(action, key)
-        if action == 'press':    
+        if action == 'press':
             if holding_key:
                 print('PERFORMING HOLDING KEY: ',holding_key)
                 pyautogui.keyDown(holding_key)
@@ -61,22 +63,22 @@ def perform_according(cmd):
                     pass
             else :
                 pyautogui.press(key)
-        if action == 'down':    
+        if action == 'down':
             print('HOLDING KEY IS:', holding_key)
             pyautogui.keyDown(key)
             holding_key=key
-        elif action == 'up':    
-            pyautogui.keyUp(holding_key)
+        elif action == 'up':
             pyautogui.keyUp(key)
-            holding_key=None
-        elif action == 'move': 
+            if (key === holding_key):
+                holding_key=None
+        elif action == 'move':
             action = {
                 'left': [-10,0],
                 'down': [0,10],
                 'up': [0,-10],
                 'right': [10,0],
             }.get(key)
-            if type(action) == 'list': 
+            if type(action) == 'list':
                 try :
                     num=int(key.char)
                     numberBuffer= numberBuffer*10
@@ -101,7 +103,7 @@ def parseLastRequest(req) :
     print(req)
 
 
-def chatConnection(host): 
+def startConnection(host): 
     print('waiting for host...\n')
     HOST = host
     PORT = 31998
@@ -114,8 +116,11 @@ def chatConnection(host):
         reply = s.recv(4096).decode()
         if loading: continue
         loading=True
-        perform_according(reply)
+        result = perform_according(reply)
+        if result == False: 
+            print('ending Connection')
+            return None
         loading=False
     s.close()
 
-chatConnection(sys.argv[1] if len(sys.argv) > 1 else 'localhost')
+startConnection(sys.argv[1] if len(sys.argv) > 1 else 'localhost')
