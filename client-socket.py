@@ -47,7 +47,9 @@ def perform_according(cmd):
             action, key = action_key.split('-')
         except:
             pass
-        print(action, key)
+        print(action, key, action_key)
+        if not action and not key:
+            return False
         if action == 'press':
             if holding_key:
                 print('PERFORMING HOLDING KEY: ',holding_key)
@@ -69,28 +71,30 @@ def perform_according(cmd):
             holding_key=key
         elif action == 'up':
             pyautogui.keyUp(key)
-            if (key === holding_key):
+            if key == holding_key:
                 holding_key=None
         elif action == 'move':
-            action = {
+            mouse_action = {
                 'left': [-10,0],
                 'down': [0,10],
                 'up': [0,-10],
                 'right': [10,0],
             }.get(key)
-            if type(action) == 'list':
+            if type(mouse_action) == 'list':
                 try :
-                    num=int(key.char)
-                    numberBuffer= numberBuffer*10
-                    numberBuffer= numberBuffer+num
+                    current_position = pyautogui.position()
+                    newX = current_poition[0] + mouse_action[0]*numberBuffer
+                    newY = current_position[1] + mouse_action[1]*numberBuffer
+                    numberBuffer = 1
+                    pyautogui.moveTo(newX, newY)
                 except Exception as err:
                     pass
-            elif action == 'l-click':
+            elif mouse_action == 'lclick':
                 try :
                     pyautogui.click()
                 except Exception as err:
                     pass
-            elif action == 'r-click':
+            elif mouse_action == 'rclick':
                 try :
                     pyautogui.click(button='right')
                 except Exception as err:

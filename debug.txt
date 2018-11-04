@@ -262,3 +262,39 @@ self._display.send_and_recv(request = self._serial)
   File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 586, in send_and_recv
 self.close_internal('server: %s' % err[1])
 TypeError: 'BrokenPipeError' object is not subscriptable
+
+
+
+
+4: run client-host normally ( no threading )
+
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 655369, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 32768, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 32768, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 32768, major_opcode = 0, minor_opcode = 0
+end joining controller
+finish with, controller
+^CTraceback (most recent call last):
+File "./index.py", line 39, in <module>
+	start_server()
+			File "./index.py", line 32, in start_server
+				connection, addr = s.accept()
+						File "/usr/local/lib/python3.6/socket.py", line 205, in accept
+							fd, addr = self._accept()
+									K
