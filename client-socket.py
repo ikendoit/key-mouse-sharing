@@ -32,21 +32,18 @@ def perform_according(cmd):
     global numberBuffer
     try :
         # keyboard performer -- used by client
-        #splitted_cmd = cmd.split('-')
-        #if len(splitted_cmd) < 2: #    print('bad reply, connection ended. {0}'.format(cmd))
-        #    sys.exit(1)
-        #action, key = splitted_cmd[0:2]
-        #action = action[2:]
-        #key = key[:-2]
-        #print(action, key)
         action_key = None
+        action = None,
+        key = None
         try :
             action_key = re.match(r'<<(.*)>>',cmd)[1].split('>><<')[0]
             action, key = action_key.split('-')
-        except: 
+        except:
             pass
-        print(action, key)
-        if action == 'press':    
+        print(action, key, action_key)
+        if not action and not key:
+            return False
+        if action == 'press':
             if holding_key:
                 print('PERFORMING HOLDING KEY: ',holding_key)
                 pyautogui.keyDown(holding_key)
@@ -54,46 +51,66 @@ def perform_according(cmd):
                 pyautogui.keyUp(holding_key)
             else :
                 pyautogui.press(key)
-        if action == 'down':    
-            print('HOLDING KEY IS:', holding_key)
+
+            # capture number presses to add to numberBuffer
+            try :
+                num=int(key)
+                numberBuffer= numberBuffer*10+num
+                print('new numberBuffer: ',numberBuffer)
+            except Exception as err:
+                print(err)
+                numberBuffer = 0
+                pass
+        if action == 'down':
             pyautogui.keyDown(key)
             holding_key=key
-        elif action == 'up':    
-            pyautogui.keyUp(holding_key)
+        elif action == 'up':
             pyautogui.keyUp(key)
+            # NOTE: cannot do: ctrl+shift+w, since we only record 1 holding key atm.
             holding_key=None
-        elif action == 'move': 
-            action = {
+        elif action == 'move':
+            mouse_action = {
                 'left': [-10,0],
                 'down': [0,10],
                 'up': [0,-10],
                 'right': [10,0],
+                'lclick': 'lclick',
+                'rclick': 'rclick',
             }.get(key)
-            if type(action) == 'list': 
+            if type(mouse_action) == type([]):
                 try :
-                    num=int(key.char)
-                    numberBuffer= numberBuffer*10
-                    numberBuffer= numberBuffer+num
+                    current_position = pyautogui.position()
+                    newX = current_position[0] + mouse_action[0]*(numberBuffer+1)
+                    newY = current_position[1] + mouse_action[1]*(numberBuffer+1)
+                    numberBuffer = 0
+                    print('moving to: ',newX, newY)
+                    pyautogui.moveTo(newX, newY)
                 except Exception as err:
+                    print('move err: ',err)
                     pass
-            elif action == 'l-click':
+            elif mouse_action == 'lclick':
                 try :
+                    print('left clicking')
                     pyautogui.click()
                 except Exception as err:
+                    print('click left err: ',err)
                     pass
-            elif action == 'r-click':
+            elif mouse_action == 'rclick':
                 try :
+                    print('right clicking')
                     pyautogui.click(button='right')
                 except Exception as err:
+                    print('click right err: ',err)
                     pass
     except Exception as err:
         print(err)
+        return False
 
 def parseLastRequest(req) :
     print(req)
 
 
-def chatConnection(host): 
+def startConnection(host): 
     print('waiting for host...\n')
     HOST = host
     PORT = 31998
@@ -106,8 +123,11 @@ def chatConnection(host):
         reply = s.recv(4096).decode()
         if loading: continue
         loading=True
-        perform_according(reply)
+        result = perform_according(reply)
+        if result == False: 
+            print('ending Connection')
+            return None
         loading=False
     s.close()
 
-chatConnection(sys.argv[1] if len(sys.argv) > 1 else 'localhost')
+startConnection(sys.argv[1] if len(sys.argv) > 1 else 'localhost')

@@ -1,0 +1,300 @@
+1: (1 client, 1 host, keep start + cancelling)
+Exception in thread Thread-10:
+Traceback (most recent call last):
+ File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 584, in send_and_recv
+ i = self.socket.send(self.data_send)
+ BrokenPipeError: [Errno 32] Broken pipe
+
+ During handling of the above exception, another exception occurred:
+
+ Traceback (most recent call last):
+ File "/usr/local/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+ self.run()
+ File "/usr/local/lib/python3.6/site-packages/pynput/_util/__init__.py", line 136, in run
+ self._run()
+ File "/usr/local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 401, in _run
+ self._suppress_stop(dm)
+ File "/usr/local/lib/python3.6/contextlib.py", line 89, in __exit__
+ next(self.gen)
+ File "/usr/local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 74, in display_manager
+  display.sync()
+  File "/usr/local/lib/python3.6/site-packages/Xlib/display.py", line 182, in sync
+  self.get_pointer_control()
+  File "/usr/local/lib/python3.6/site-packages/Xlib/display.py", line 833, in get_pointer_control
+  return request.GetPointerControl(display = self.display)
+  File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1369, in __init__
+  self.reply()
+  File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1381, in reply
+  self._display.send_and_recv(request = self._serial)
+  File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 586, in send_and_recv
+   self.close_internal('server: %s' % err[1])
+   TypeError: 'BrokenPipeError' object is not subscriptable
+   Exception in thread Thread-5:
+   Traceback (most recent call last):
+   File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 584, in send_and_recv
+   i = self.socket.send(self.data_send)
+   BrokenPipeError: [Errno 32] Broken pipe
+
+   During handling of the above exception, another exception occurred:
+
+   Traceback (most recent call last):
+   File "/usr/local/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+   self.run()
+   File "/usr/local/lib/python3.6/site-packages/pynput/_util/__init__.py", line 136, in run
+   self._run()
+   File "/usr/local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 401, in _run
+   self._suppress_stop(dm)
+   File "/usr/local/lib/python3.6/contextlib.py", line 89, in __exit__
+   next(self.gen)
+    File "/usr/local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 74, in display_manager
+    display.sync()
+    File "/usr/local/lib/python3.6/site-packages/Xlib/display.py", line 182, in sync
+    self.get_pointer_control()
+    File "/usr/local/lib/python3.6/site-packages/Xlib/display.py", line 833, in get_pointer_control
+    return request.GetPointerControl(display = self.display)
+    File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1369, in __init__
+    self.reply()
+    File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1381, in reply
+    self._display.send_and_recv(request = self._serial)
+    File "/usr/local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 586, in send_and_recv
+     self.close_internal('server: %s' % err[1])
+     TypeError: 'BrokenPipeError' object is not subscriptable
+
+
+
+2: (2 clients, 1 host with 2 threads, keep spamming)
+
+Exception in thread Thread-7:
+Traceback (most recent call last):
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 584, in send_and_recv
+i = self.socket.send(self.data_send)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+ File "/usr/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+self.run()
+ File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/__init__.py", line 136, in run
+self._run()
+ File "/home/ken/.local/lib/python3.6/site-packages/pynput/keyboard/_xorg.py", line 499, in _run
+super(Listener, self)._run()
+ File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 401, in _run
+self._suppress_stop(dm)
+ File "/usr/lib/python3.6/contextlib.py", line 88, in __exit__
+next(self.gen)
+ File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 74, in display_manager
+display.sync()
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/display.py", line 182, in sync
+self.get_pointer_control()
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/display.py", line 833, in get_pointer_control
+return request.GetPointerControl(display = self.display)
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1369, in __init__
+self.reply()
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1381, in reply
+self._display.send_and_recv(request = self._serial)
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 586, in send_and_recv
+self.close_internal('server: %s' % err[1])
+TypeError: 'BrokenPipeError' object is not subscriptable
+
+Exception in thread Thread-9:
+Traceback (most recent call last):
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 584, in send_and_recv
+i = self.socket.send(self.data_send)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+ File "/usr/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+self.run()
+ File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/__init__.py", line 136, in run
+self._run()
+ File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 401, in _run
+self._suppress_stop(dm)
+ File "/usr/lib/python3.6/contextlib.py", line 88, in __exit__
+next(self.gen)
+ File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 74, in display_manager
+display.sync()
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/display.py", line 182, in sync
+self.get_pointer_control()
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/display.py", line 833, in get_pointer_control
+return request.GetPointerControl(display = self.display)
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1369, in __init__
+self.reply()
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1381, in reply
+self._display.send_and_recv(request = self._serial)
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 586, in send_and_recv
+self.close_internal('server: %s' % err[1])
+TypeError: 'BrokenPipeError' object is not subscriptable
+Exception in thread Thread-10:
+Traceback (most recent call last):
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 584, in send_and_recv
+i = self.socket.send(self.data_send)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+ File "/usr/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+self.run()
+ File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/__init__.py", line 136, in run
+self._run()
+ File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 401, in _run
+self._suppress_stop(dm)
+ File "/usr/lib/python3.6/contextlib.py", line 88, in __exit__
+next(self.gen)
+ File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 74, in display_manager
+display.sync()
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/display.py", line 182, in sync
+self.get_pointer_control()
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/display.py", line 833, in get_pointer_control
+return request.GetPointerControl(display = self.display)
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1369, in __init__
+self.reply()
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1381, in reply
+self._display.send_and_recv(request = self._serial)
+ File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 586, in send_and_recv
+self.close_internal('server: %s' % err[1])
+TypeError: 'BrokenPipeError' object is not subscriptable
+
+
+
+3:
+
+exception in thread Thread-3:
+Traceback (most recent call last):
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 584, in send_and_recv
+i = self.socket.send(self.data_send)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+self.run()
+  File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/__init__.py", line 136, in run
+self._run()
+  File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 401, in _run
+self._suppress_stop(dm)
+  File "/usr/lib/python3.6/contextlib.py", line 88, in __exit__
+next(self.gen)
+  File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 74, in display_manager
+display.sync()
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/display.py", line 182, in sync
+self.get_pointer_control()
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/display.py", line 833, in get_pointer_control
+return request.GetPointerControl(display = self.display)
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1369, in __init__
+self.reply()
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1381, in reply
+self._display.send_and_recv(request = self._serial)
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 586, in send_and_recv
+self.close_internal('server: %s' % err[1])
+TypeError: 'BrokenPipeError' object is not subscriptable
+
+
+
+
+
+debug 3: (keep 1 client-1 host, keep spamming)
+
+Exception in thread Thread-3:
+Traceback (most recent call last):
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 584, in send_and_recv
+i = self.socket.send(self.data_send)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+self.run()
+  File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/__init__.py", line 136, in run
+self._run()
+  File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 401, in _run
+self._suppress_stop(dm)
+  File "/usr/lib/python3.6/contextlib.py", line 88, in __exit__
+next(self.gen)
+  File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 74, in display_manager
+display.sync()
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/display.py", line 182, in sync
+self.get_pointer_control()
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/display.py", line 833, in get_pointer_control
+return request.GetPointerControl(display = self.display)
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1369, in __init__
+self.reply()
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1381, in reply
+self._display.send_and_recv(request = self._serial)
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 586, in send_and_recv
+self.close_internal('server: %s' % err[1])
+TypeError: 'BrokenPipeError' object is not subscriptable
+
+Exception in thread Thread-2:
+Traceback (most recent call last):
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 584, in send_and_recv
+i = self.socket.send(self.data_send)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+self.run()
+  File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/__init__.py", line 136, in run
+self._run()
+  File "/home/ken/.local/lib/python3.6/site-packages/pynput/keyboard/_xorg.py", line 499, in _run
+super(Listener, self)._run()
+  File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 401, in _run
+self._suppress_stop(dm)
+  File "/usr/lib/python3.6/contextlib.py", line 88, in __exit__
+next(self.gen)
+  File "/home/ken/.local/lib/python3.6/site-packages/pynput/_util/xorg.py", line 74, in display_manager
+display.sync()
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/display.py", line 182, in sync
+self.get_pointer_control()
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/display.py", line 833, in get_pointer_control
+return request.GetPointerControl(display = self.display)
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1369, in __init__
+self.reply()
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/rq.py", line 1381, in reply
+self._display.send_and_recv(request = self._serial)
+  File "/home/ken/.local/lib/python3.6/site-packages/Xlib/protocol/display.py", line 586, in send_and_recv
+self.close_internal('server: %s' % err[1])
+TypeError: 'BrokenPipeError' object is not subscriptable
+
+
+
+
+4: run client-host normally ( no threading )
+
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 655369, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 32768, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 32768, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 0, major_opcode = 0, minor_opcode = 0
+X protocol error:
+<class 'Xlib.error.XError'>: code = 0, resource_id = 0, sequence_number = 32768, major_opcode = 0, minor_opcode = 0
+end joining controller
+finish with, controller
+^CTraceback (most recent call last):
+File "./index.py", line 39, in <module>
+	start_server()
+			File "./index.py", line 32, in start_server
+				connection, addr = s.accept()
+						File "/usr/local/lib/python3.6/socket.py", line 205, in accept
+							fd, addr = self._accept()
+									K

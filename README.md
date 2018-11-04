@@ -2,6 +2,8 @@
 
 This read me is written in another keyboard ( using Thinkpad's key board, remotely control Asus keyboard to type this read me )
 
+First, let's procrastinate: https://www.youtube.com/watch?v=zpN7Ait0sOE&t=52s
+
 ## Author's Note: 
 
 	There seem to be a bug, where python3-xlib threading is conflicting with linux Xorg display server. 
