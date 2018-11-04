@@ -56,48 +56,58 @@ def perform_according(cmd):
                 pyautogui.keyDown(holding_key)
                 pyautogui.press(key)
                 pyautogui.keyUp(holding_key)
-                try :
-                    num=int(key.char)
-                    numberBuffer= numberBuffer*10
-                    numberBuffer= numberBuffer+num
-                except Exception as err:
-                    numberBuffer = 0
-                    pass
             else :
                 pyautogui.press(key)
+
+            # capture number presses to add to numberBuffer
+            try :
+                num=int(key.char)
+                numberBuffer= numberBuffer*10
+                numberBuffer= numberBuffer+num
+                print('new numberBuffer: ',numberBuffer)
+            except Exception as err:
+                numberBuffer = 0
+                pass
         if action == 'down':
-            print('HOLDING KEY IS:', holding_key)
             pyautogui.keyDown(key)
             holding_key=key
         elif action == 'up':
             pyautogui.keyUp(key)
-            if key == holding_key:
-                holding_key=None
+            # NOTE: cannot do: ctrl+shift+w, since we only record 1 holding key atm.
+            holding_key=None
         elif action == 'move':
             mouse_action = {
                 'left': [-10,0],
                 'down': [0,10],
                 'up': [0,-10],
                 'right': [10,0],
+                'lclick': 'lclick',
+                'rclick': 'rclick',
             }.get(key)
             if type(mouse_action) == 'list':
                 try :
                     current_position = pyautogui.position()
-                    newX = current_poition[0] + mouse_action[0]*numberBuffer
-                    newY = current_position[1] + mouse_action[1]*numberBuffer
-                    numberBuffer = 1
+                    newX = current_poition[0] + mouse_action[0]*(numberBuffer+1)
+                    newY = current_position[1] + mouse_action[1]*(numberBuffer+1)
+                    numberBuffer = 0
+                    print('moving to: ',newX, newY)
                     pyautogui.moveTo(newX, newY)
                 except Exception as err:
+                    print('move err: ',err)
                     pass
             elif mouse_action == 'lclick':
                 try :
+                    print('left clicking')
                     pyautogui.click()
                 except Exception as err:
+                    print('click left err: ',err)
                     pass
             elif mouse_action == 'rclick':
                 try :
+                    print('right clicking')
                     pyautogui.click(button='right')
                 except Exception as err:
+                    print('click right err: ',err)
                     pass
     except Exception as err:
         print(err)
