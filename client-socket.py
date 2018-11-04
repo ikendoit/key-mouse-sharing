@@ -32,13 +32,6 @@ def perform_according(cmd):
     global numberBuffer
     try :
         # keyboard performer -- used by client
-        #splitted_cmd = cmd.split('-')
-        #if len(splitted_cmd) < 2: #    print('bad reply, connection ended. {0}'.format(cmd))
-        #    sys.exit(1)
-        #action, key = splitted_cmd[0:2]
-        #action = action[2:]
-        #key = key[:-2]
-        #print(action, key)
         action_key = None
         action = None,
         key = None
@@ -61,11 +54,11 @@ def perform_according(cmd):
 
             # capture number presses to add to numberBuffer
             try :
-                num=int(key.char)
-                numberBuffer= numberBuffer*10
-                numberBuffer= numberBuffer+num
+                num=int(key)
+                numberBuffer= numberBuffer*10+num
                 print('new numberBuffer: ',numberBuffer)
             except Exception as err:
+                print(err)
                 numberBuffer = 0
                 pass
         if action == 'down':
@@ -84,10 +77,10 @@ def perform_according(cmd):
                 'lclick': 'lclick',
                 'rclick': 'rclick',
             }.get(key)
-            if type(mouse_action) == 'list':
+            if type(mouse_action) == type([]):
                 try :
                     current_position = pyautogui.position()
-                    newX = current_poition[0] + mouse_action[0]*(numberBuffer+1)
+                    newX = current_position[0] + mouse_action[0]*(numberBuffer+1)
                     newY = current_position[1] + mouse_action[1]*(numberBuffer+1)
                     numberBuffer = 0
                     print('moving to: ',newX, newY)
