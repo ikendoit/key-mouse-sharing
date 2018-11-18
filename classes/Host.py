@@ -1,7 +1,10 @@
 from pynput import keyboard, mouse
+import pyautogui
 from lib import key_switcher
 from lib import mouse_switcher
-#mouseController = mouse.Controller()
+
+holding_key = None
+numberBuffer = 0
 
 class HostScript:
     def __init__(self, connection):
@@ -43,15 +46,85 @@ class HostScript:
             print('ended joining')
 
 
+
+
+
+
+
+    def keyboard_does_mouse(self):
+        def on_press_kdm(keyObj):
+            global numberBuffer
+            try:
+                key = keyObj.char
+            except Exception: 
+                key = key_switcher.switch_key(keyObj).split('-')[1]
+
+            try : 
+                mouse_action = {
+                    'left': [-10,0],
+                    'down': [0,10],
+                    'up': [0,-10],
+                    'right': [10,0],
+                    'lclick': 'lclick',
+                    'rclick': 'rclick',
+                }.get(key)
+                if type(mouse_action) == type([]):
+                    try :
+                        current_position = pyautogui.position()
+                        newX = current_position[0] + mouse_action[0]*(numberBuffer+1)
+                        newY = current_position[1] + mouse_action[1]*(numberBuffer+1)
+                        numberBuffer = 0
+                        pyautogui.moveTo(newX, newY)
+                    except Exception as err:
+                        print('move err: ',err)
+                        pass
+                elif mouse_action == 'lclick':
+                    try :
+                        print('left clicking')
+                        pyautogui.click()
+                    except Exception as err:
+                        print('click left err: ',err)
+                        pass
+                elif mouse_action == 'rclick':
+                    try :
+                        print('right clicking')
+                        pyautogui.click(button='right')
+                    except Exception as err:
+                        print('click right err: ',err)
+                        pass
+                else:
+                    # check if number to add to buffer
+                    try :
+                        num=int(key)
+                        numberBuffer= numberBuffer*10+num
+                        print('new numberBuffer: ',numberBuffer)
+                    except Exception:
+                        numberBuffer = 0
+                        pass
+            except exception as err:
+                print(err)
+                return false
+
+        def on_release_kdm(key):
+            if key == keyboard.Key.esc:    
+                return False
+
+        with keyboard.Listener(
+            on_press=on_press_kdm,
+            on_release=on_release_kdm,
+            suppress=True) as kb_listener_child: 
+                kb_listener_child.join()
+
+
     def runController(self): 
         def on_release(key):
             if key == keyboard.Key.f1:    
                 print('running child connection')
                 self.runChild()
                 print('finish running child')
-            if key == keyboard.Key.f3:    
+            if key == keyboard.Key.f2:    
                 print('running key-mouse connection')
-                #self.keyboard_does_mouse()
+                self.keyboard_does_mouse()
 
         with keyboard.Listener(
             on_release=on_release

@@ -23,7 +23,6 @@ pyautogui.MINIMUM_DURATION=0
 pyautogui.MINIMUM_SLEEP=0
 holding_key = None
 numberBuffer = 0 
-mouse = Controller()
 
 # TODO: test shift-... or alt-tab 
 

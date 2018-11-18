@@ -10,53 +10,50 @@ numberBuffer = 0
 # but using vim syntax
 def keyboard_does_mouse():
     def on_press_kdm(key):
-        global numberBuffer
-        try : 
-            action = {
-                'h': [-10,0],
-                'j': [0,10],
-                'k': [0,-10],
-                'l': [10,0],
-                'H': [-30,0],
-                'J': [0,30],
-                'K': [0,-30],
-                'L': [30,0],
-                'i': 'left',
-                'o': 'right'
-            }.get(key.char)
-            # action is caught successfully
-            if not action: 
-                try :
-                    num=int(key.char)
-                    numberBuffer= numberBuffer*10
-                    numberBuffer= numberBuffer+num
-                except Exception as err:
-                    print(err)
-                    pass
-                return
-            if type(action) is str:
-                pyautogui.click(button=action)
-            elif type(action) is list:
-                #pos = pyautogui.position()
-                #newPos = []
-                #newPos.append(pos[0]+action[0])
-                #newPos.append(pos[1]+action[1])
-                #if numberBuffer > 0: 
-                #    print('performing number: ',numberBuffer)
-                #    newPos[0] = newPos[0]+action[0]*numberBuffer
-                #    newPos[1] = newPos[1]+action[1]*numberBuffer
-                #pyautogui.moveTo(newPos) 
-                #numberBuffer = 0
+       global numberbuffer
+            try : 
+                action = {
+                    'left': [-10,0],
+                    'down': [0,10],
+                    'up': [0,-10],
+                    'right': [10,0],
+                    'lclick': 'lclick',
+                    'rclick': 'rclick',
+                }.get(key.char)
+                # action is caught successfully
+                if type(action) == type([]):
+                    try :
+                        current_position = pyautogui.position()
+                        newx = current_position[0] + action[0]*(numberbuffer+1)
+                        newy = current_position[1] + action[1]*(numberbuffer+1)
+                        numberbuffer = 0
+                        print('moving to: ',newx, newy)
+                        pyautogui.moveto(newx, newy)
+                    except exception as err:
+                        print('move err: ',err)
+                        pass
+                elif action == 'lclick':
+                    try :
+                        print('left clicking')
+                        pyautogui.click()
+                    except exception as err:
+                        print('click left err: ',err)
+                        pass
+                elif action == 'rclick':
+                    try :
+                        print('right clicking')
+                        pyautogui.click(button='right')
+                    except exception as err:
+                        print('click right err: ',err)
+                        pass
+            except exception as err:
+                print(err)
+                return false
 
-                dx = action[0] + action[0]*numberBuffer
-                dy = action[1] + action[1]*numberBuffer
-                numberBuffer = 0
-                mouse_ctl.move(dx,dy)
-        except AttributeError:
-            print('special key')
+
 
     def on_release_kdm(key):
-        if key == keyboard.Key.enter:    
+        if key == keyboard.Key.esc:    
             return False
 
     with keyboard.Listener(
