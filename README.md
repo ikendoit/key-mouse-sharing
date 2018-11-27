@@ -41,8 +41,9 @@ or follow this page: https://pyautogui.readthedocs.io/en/latest/install.html
 
 ```
 	./mouse_controller.py
-	<click f3 to control mouse, f1 to exit mouse mode but can return>
-	< 'hjkl' to move around >
-	< 'io' to left/right click >
+	<click f2 to control mouse, esc to exit mouse mode>
+	<click f1 to control client, esc to exit client mode >
+	< up down left right to move mouse >
+	< right_ctrl, right_shift to left/right click >
 
 ```
